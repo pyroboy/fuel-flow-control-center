@@ -1,22 +1,21 @@
-
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { cn } from '@/lib/utils';
-import { UserRole } from '@/types';
-import { 
-  BarChart, 
-  Truck, 
-  Users, 
-  ShoppingCart, 
-  Database, 
-  MessageCircle, 
-  FileText, 
-  User, 
-  Settings, 
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
+import { UserRole } from "@/types";
+import {
+  BarChart,
+  Truck,
+  Users,
+  ShoppingCart,
+  Database,
+  MessageCircle,
+  FileText,
+  User,
+  Settings,
   LogOut,
   Home,
-  Droplet 
-} from 'lucide-react';
+  Droplet,
+} from "lucide-react";
 
 interface SidebarProps {
   userRole: UserRole;
@@ -35,69 +34,92 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, collapsed, onToggle }) => {
   const location = useLocation();
 
   const navItems: NavItem[] = [
-    { 
-      title: 'Dashboard', 
-      path: '/', 
-      icon: <Home size={20} />, 
-      roles: [UserRole.Admin, UserRole.OfficeStaff, UserRole.DepotStaff, UserRole.GSO, UserRole.GSOStaff] 
+    {
+      title: "Dashboard",
+      path: "/",
+      icon: <Home size={20} />,
+      roles: [
+        UserRole.Admin,
+        UserRole.OfficeStaff,
+        UserRole.DepotStaff,
+        UserRole.GSO,
+        UserRole.GSOStaff,
+      ],
     },
-    { 
-      title: 'User Management', 
-      path: '/users', 
-      icon: <Users size={20} />, 
-      roles: [UserRole.Admin, UserRole.GSO] 
+    {
+      title: "User Management",
+      path: "/users",
+      icon: <Users size={20} />,
+      roles: [UserRole.Admin, UserRole.GSO],
     },
-    { 
-      title: 'Fuel Settings', 
-      path: '/fuel-settings', 
-      icon: <Droplet size={20} />, 
-      roles: [UserRole.Admin, UserRole.OfficeStaff] 
+    {
+      title: "Fuel Settings",
+      path: "/fuel-settings",
+      icon: <Droplet size={20} />,
+      roles: [UserRole.Admin, UserRole.OfficeStaff],
     },
-    { 
-      title: 'Truck Records', 
-      path: '/trucks', 
-      icon: <Truck size={20} />, 
-      roles: [UserRole.Admin, UserRole.DepotStaff] 
+    {
+      title: "Truck Records",
+      path: "/trucks",
+      icon: <Truck size={20} />,
+      roles: [UserRole.Admin, UserRole.DepotStaff],
     },
-    { 
-      title: 'Orders', 
-      path: '/orders', 
-      icon: <ShoppingCart size={20} />, 
-      roles: [UserRole.Admin, UserRole.OfficeStaff, UserRole.DepotStaff, UserRole.GSO, UserRole.GSOStaff] 
+    {
+      title: "Orders",
+      path: "/orders",
+      icon: <ShoppingCart size={20} />,
+      roles: [
+        UserRole.Admin,
+        UserRole.OfficeStaff,
+        UserRole.DepotStaff,
+        UserRole.GSO,
+        UserRole.GSOStaff,
+      ],
     },
-    { 
-      title: 'Inventory', 
-      path: '/inventory', 
-      icon: <Database size={20} />, 
-      roles: [UserRole.Admin, UserRole.DepotStaff] 
+    {
+      title: "Inventory",
+      path: "/inventory",
+      icon: <Database size={20} />,
+      roles: [UserRole.Admin, UserRole.DepotStaff],
     },
-    { 
-      title: 'Reports', 
-      path: '/reports', 
-      icon: <BarChart size={20} />, 
-      roles: [UserRole.Admin, UserRole.OfficeStaff, UserRole.DepotStaff, UserRole.GSO] 
+    {
+      title: "Reports",
+      path: "/reports",
+      icon: <BarChart size={20} />,
+      roles: [
+        UserRole.Admin,
+        UserRole.OfficeStaff,
+        UserRole.DepotStaff,
+        UserRole.GSO,
+      ],
     },
-    { 
-      title: 'Messages', 
-      path: '/messages', 
-      icon: <MessageCircle size={20} />, 
-      roles: [UserRole.Admin, UserRole.OfficeStaff, UserRole.DepotStaff, UserRole.GSO, UserRole.GSOStaff] 
+    {
+      title: "Messages",
+      path: "/messages",
+      icon: <MessageCircle size={20} />,
+      roles: [
+        UserRole.Admin,
+        UserRole.OfficeStaff,
+        UserRole.DepotStaff,
+        UserRole.GSO,
+        UserRole.GSOStaff,
+      ],
     },
   ];
 
-  const filteredNavItems = navItems.filter(item => item.roles.includes(userRole));
+  const filteredNavItems = navItems.filter((item) =>
+    item.roles.includes(userRole)
+  );
 
   return (
-    <aside 
+    <aside
       className={cn(
         "bg-indigo-900 text-white h-screen relative transition-all duration-300 ease-in-out",
         collapsed ? "w-16" : "w-64"
       )}
     >
       <div className="p-4 flex items-center justify-between">
-        {!collapsed && (
-          <h1 className="text-xl font-bold truncate">Fuel Flow</h1>
-        )}
+        {!collapsed && <h1 className="text-xl font-bold truncate">FuelFlow</h1>}
         <button
           onClick={onToggle}
           className={cn(
@@ -130,8 +152,6 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, collapsed, onToggle }) => {
           ))}
         </ul>
       </nav>
-
-     
     </aside>
   );
 };
