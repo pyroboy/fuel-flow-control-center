@@ -27,11 +27,11 @@ import { Truck as TruckType, TruckStatus } from '@/types'; // Rename imported Tr
 
 // --- Mock Data ---
 const initialMockTrucks: TruckType[] = [
-  { id: 'trk_1', plate_number: 'FUEL 001', capacity_liters: 10000, status: TruckStatus.Available, created_at: '2024-11-15T08:00:00Z', updated_at: '2025-04-10T14:30:00Z' },
-  { id: 'trk_2', plate_number: 'GAS 123', capacity_liters: 5000, status: TruckStatus.OutForDelivery, created_at: '2024-11-20T09:15:00Z', updated_at: '2025-04-14T10:05:00Z' },
-  { id: 'trk_3', plate_number: 'NGA 987', capacity_liters: 15000, status: TruckStatus.Available, created_at: '2025-01-05T11:00:00Z', updated_at: '2025-03-25T16:00:00Z' },
-  { id: 'trk_4', plate_number: 'DEPO 04', capacity_liters: 10000, status: TruckStatus.Unavailable, created_at: '2025-02-10T13:45:00Z', updated_at: '2025-04-12T09:00:00Z' }, // e.g., Maintenance
-  { id: 'trk_5', plate_number: 'FLW 555', capacity_liters: 8000, status: TruckStatus.Disabled, created_at: '2025-03-01T10:00:00Z', updated_at: '2025-04-01T17:20:00Z' }, // e.g., Major repair/decommissioned
+  { id: 'trk_1', plate_number: 'FUEL 001', capacity_liters: 10000, status: TruckStatus.Available, created_at: '2024-11-15T08:00:00Z', updated_at: '2025-04-10T14:30:00Z',driver: 'John Doe' },
+  { id: 'trk_2', plate_number: 'GAS 123', capacity_liters: 5000, status: TruckStatus.OutForDelivery, created_at: '2024-11-20T09:15:00Z', updated_at: '2025-04-14T10:05:00Z',driver: 'Jane Smith' },
+  { id: 'trk_3', plate_number: 'NGA 987', capacity_liters: 15000, status: TruckStatus.Available, created_at: '2025-01-05T11:00:00Z', updated_at: '2025-03-25T16:00:00Z',driver: 'Alice Johnson' },
+  { id: 'trk_4', plate_number: 'DEPO 04', capacity_liters: 10000, status: TruckStatus.Unavailable, created_at: '2025-02-10T13:45:00Z', updated_at: '2025-04-12T09:00:00Z',driver: 'Bob Brown' }, // e.g., Maintenance
+  { id: 'trk_5', plate_number: 'FLW 555', capacity_liters: 8000, status: TruckStatus.Disabled, created_at: '2025-03-01T10:00:00Z', updated_at: '2025-04-01T17:20:00Z',driver: 'Charlie Davis' }, // e.g., Major repair/decommissioned
 ];
 // --- End Mock Data ---
 
@@ -111,6 +111,7 @@ const TruckRecords: React.FC = () => {
               <TableRow>
                 <TableHead>Plate Number</TableHead>
                 <TableHead>Capacity (Liters)</TableHead>
+                <TableHead>Driver</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Last Updated</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
@@ -118,7 +119,7 @@ const TruckRecords: React.FC = () => {
             </TableHeader>
             <TableBody>
                {trucks.length === 0 ? (
-                 <TableRow><TableCell colSpan={5} className="h-24 text-center">No trucks found.</TableCell></TableRow>
+                 <TableRow><TableCell colSpan={6} className="h-24 text-center">No trucks found.</TableCell></TableRow>
                ) : (
                  trucks.map((truck) => {
                     const statusStyle = getStatusBadgeVariant(truck.status);
@@ -126,6 +127,7 @@ const TruckRecords: React.FC = () => {
                         <TableRow key={truck.id}>
                             <TableCell className="font-medium">{truck.plate_number}</TableCell>
                             <TableCell>{truck.capacity_liters.toLocaleString()}</TableCell> {/* Format number */}
+                            <TableCell>{truck.driver}</TableCell>
                             <TableCell>
                             <Badge variant={statusStyle.variant} className={statusStyle.className}>
                                 {formatTruckStatus(truck.status)}
