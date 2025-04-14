@@ -105,6 +105,7 @@ export interface FuelPrice {
 export interface Truck {
   id: string;
   plate_number: string;
+  driver:string
   capacity_liters: number;
   status: TruckStatus;
   created_at: string;
