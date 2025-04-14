@@ -25,12 +25,18 @@ const MainLayout: React.FC = () => {
           collapsed={sidebarCollapsed} 
           onToggle={toggleSidebar} 
         />
-        <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
+        <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : ''}`}>
           <TopNavBar />
           <main className="flex-1 overflow-auto">
             <div className="p-6">
               <Outlet />
             </div>
+          </main>
+        </div>
+      </div>
+    </TooltipProvider>
+  );
+};
           </main>
         </div>
       </div>

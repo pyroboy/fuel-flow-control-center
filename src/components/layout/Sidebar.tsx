@@ -131,39 +131,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, collapsed, onToggle }) => {
         </ul>
       </nav>
 
-      <div className="absolute bottom-0 w-full p-4">
-        <div className="border-t border-indigo-800 pt-4">
-          <Link
-            to="/profile"
-            className={cn(
-              "flex items-center px-4 py-3 text-sm text-indigo-100 hover:bg-indigo-800 transition-colors",
-              collapsed ? "justify-center" : "justify-start"
-            )}
-          >
-            <User size={20} />
-            {!collapsed && <span className="ml-3">Profile</span>}
-          </Link>
-          <Link
-            to="/settings"
-            className={cn(
-              "flex items-center px-4 py-3 text-sm text-indigo-100 hover:bg-indigo-800 transition-colors",
-              collapsed ? "justify-center" : "justify-start"
-            )}
-          >
-            <Settings size={20} />
-            {!collapsed && <span className="ml-3">Settings</span>}
-          </Link>
-          <button
-            className={cn(
-              "flex items-center px-4 py-3 text-sm text-indigo-100 hover:bg-indigo-800 transition-colors w-full",
-              collapsed ? "justify-center" : "justify-start"
-            )}
-          >
-            <LogOut size={20} />
-            {!collapsed && <span className="ml-3">Logout</span>}
-          </button>
-        </div>
-      </div>
+     
     </aside>
   );
 };
