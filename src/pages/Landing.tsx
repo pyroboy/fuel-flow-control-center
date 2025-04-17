@@ -1,120 +1,159 @@
 // src/pages/Landing.tsx
 
-import React from 'react';
-import { Link } from 'react-router-dom'; // Use react-router-dom Link
-import { Truck, BarChart3, Clock, Shield, Users, Droplet } from "lucide-react"; // Add Droplet for consistency
-import { Button } from '@/components/ui/button'; // Import Button from shadcn/ui
+import React from "react";
+import { Link } from "react-router-dom"; // Use react-router-dom Link
+import {
+  Truck,
+  BarChart3,
+  Clock,
+  Shield,
+  Users,
+  Droplet,
+  Phone as PhoneIcon,
+  Mail as MailIcon,
+  MapPin as MapPinIcon,
+} from "lucide-react"; // Add Droplet and other icons
+import { Button } from "@/components/ui/button"; // Import Button from shadcn/ui
 
 // --- Placeholder Navbar ---
 const Navbar: React.FC = () => (
-    <nav className="bg-white border-b border-gray-200 fixed w-full z-20 top-0 left-0">
-        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-            <Link to="/landing" className="flex items-center space-x-2">
-                <Droplet className="h-7 w-7 text-indigo-600" />
-                <span className="text-xl font-bold text-indigo-900">FuelFlow</span>
-            </Link>
-            <div className="space-x-2">
-                 {/* Add Nav links here if needed */}
-                 <Link to="/auth">
-                    <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700">
-                        Log In
-                    </Button>
-                 </Link>
-                 <Link to="#"> {/* Sign up link - Placeholder */}
-                    <Button variant="outline" className="border-indigo-600 text-indigo-600 hover:bg-indigo-50">
-                        Sign Up
-                    </Button>
-                 </Link>
-            </div>
-        </div>
-    </nav>
+  <nav className="bg-white border-b border-gray-200 fixed w-full z-20 top-0 left-0">
+    <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+      <Link to="/" className="flex items-center space-x-2">
+        {" "}
+        {/* Changed link to / */}
+        <div></div>
+        <span className="text-xl font-bold text-indigo-900">FuelFlow</span>
+      </Link>
+      <div className="space-x-2">
+        {/* Add Nav links here if needed */}
+        <Link to="/auth">
+          <Button
+            variant="default"
+            className="bg-indigo-600 hover:bg-indigo-700"
+          >
+            Log In
+          </Button>
+        </Link>
+        <Link to="#">
+          {" "}
+          {/* Sign up link - Placeholder */}
+          <Button
+            variant="outline"
+            className="border-indigo-600 text-indigo-600 hover:bg-indigo-50"
+          >
+            Sign Up
+          </Button>
+        </Link>
+      </div>
+    </div>
+  </nav>
 );
 
 // --- Placeholder Footer ---
 const Footer: React.FC = () => (
-     <footer className="bg-gray-800 text-white py-8">
-       <div className="container mx-auto px-4">
-         <div className="flex flex-col md:flex-row justify-between items-center">
-           <div className="flex items-center space-x-2 mb-4 md:mb-0">
-             <Droplet className="h-6 w-6 text-indigo-400" />
-             <span className="text-xl font-semibold">FuelFlow</span>
-           </div>
-           <div className="text-sm text-gray-400 text-center md:text-right">
-             &copy; {new Date().getFullYear()} FuelFlow Control Center. All rights reserved.
-             <div className="mt-1">
-                <Link to="#" className="hover:text-indigo-400 mx-2">Privacy Policy</Link> |
-                <Link to="#" className="hover:text-indigo-400 mx-2">Terms of Service</Link>
-             </div>
-           </div>
-         </div>
-       </div>
-     </footer>
+  <footer className="bg-gray-800 text-white py-8">
+    <div className="container mx-auto px-4">
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="flex items-center space-x-2 mb-4 md:mb-0">
+          <Droplet className="h-6 w-6 text-indigo-400" />
+          <span className="text-xl font-semibold">FuelFlow</span>
+        </div>
+        <div className="text-sm text-gray-400 text-center md:text-right">
+          © {new Date().getFullYear()} FuelFlow Control Center. All rights
+          reserved.
+          <div className="mt-1">
+            <Link to="#" className="hover:text-indigo-400 mx-2">
+              Privacy Policy
+            </Link>{" "}
+            |
+            <Link to="#" className="hover:text-indigo-400 mx-2">
+              Terms of Service
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 );
 
 // --- Feature Card Component ---
 interface FeatureCardProps {
-    icon: React.ReactNode;
-    title: string;
-    description: string;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
 }
-const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) => (
-    <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow text-center md:text-left">
-        <div className="mb-4 inline-block md:block">{icon}</div>
-        <h3 className="text-xl font-bold mb-2">{title}</h3>
-        <p className="text-gray-600">{description}</p>
-    </div>
+const FeatureCard: React.FC<FeatureCardProps> = ({
+  icon,
+  title,
+  description,
+}) => (
+  <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow text-center md:text-left">
+    <div className="mb-4 inline-block md:block">{icon}</div>
+    <h3 className="text-xl font-bold mb-2">{title}</h3>
+    <p className="text-gray-600">{description}</p>
+  </div>
 );
 
 // --- Step Card Component ---
 interface StepCardProps {
-    number: string;
-    title: string;
-    description: string;
-    isFirst?: boolean;
-    isLast?: boolean;
+  number: string;
+  title: string;
+  description: string;
+  isFirst?: boolean;
+  isLast?: boolean;
 }
-const StepCard: React.FC<StepCardProps> = ({ number, title, description, isLast = false }) => (
-    <div className="relative lg:flex-1"> {/* Use flex-1 on larger screens */}
-        <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow h-full">
-            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-900 text-white font-bold mb-4">
-                {number}
-            </div>
-            <h3 className="text-lg font-bold mb-2">{title}</h3>
-            <p className="text-gray-600 text-sm">{description}</p>
-        </div>
-        {/* Connector line for larger screens */}
-        {!isLast && (
-            <div className="hidden lg:block absolute top-10 left-full transform -translate-y-1/2 w-6 h-0.5 bg-indigo-300 ml-1 mr-1"></div> // Adjusted position and size
-        )}
-        {/* Connector line for medium screens (stacked vertically) */}
-        {!isLast && (
-             <div className="hidden md:block lg:hidden absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-3 w-0.5 h-6 bg-indigo-300"></div>
-        )}
-          {/* Connector line for small screens (stacked vertically) */}
-         {!isLast && (
-             <div className="block md:hidden absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-3 w-0.5 h-6 bg-indigo-300"></div>
-        )}
+const StepCard: React.FC<StepCardProps> = ({
+  number,
+  title,
+  description,
+  isLast = false,
+}) => (
+  <div className="relative lg:flex-1">
+    {" "}
+    {/* Use flex-1 on larger screens */}
+    <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow h-full">
+      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-900 text-white font-bold mb-4">
+        {number}
+      </div>
+      <h3 className="text-lg font-bold mb-2">{title}</h3>
+      <p className="text-gray-600 text-sm">{description}</p>
     </div>
+    {/* Connector line for larger screens */}
+    {!isLast && (
+      <div className="hidden lg:block absolute top-10 left-full transform -translate-y-1/2 w-6 h-0.5 bg-indigo-300 ml-1 mr-1"></div> // Adjusted position and size
+    )}
+    {/* Connector line for medium screens (stacked vertically) */}
+    {!isLast && (
+      <div className="hidden md:block lg:hidden absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-3 w-0.5 h-6 bg-indigo-300"></div>
+    )}
+    {/* Connector line for small screens (stacked vertically) */}
+    {!isLast && (
+      <div className="block md:hidden absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-3 w-0.5 h-6 bg-indigo-300"></div>
+    )}
+  </div>
 );
-
 
 // --- Testimonial Card Component ---
 interface TestimonialCardProps {
-    quote: string;
-    name: string;
-    title: string;
+  quote: string;
+  name: string;
+  title: string;
 }
-const TestimonialCard: React.FC<TestimonialCardProps> = ({ quote, name, title }) => (
-    <div className="bg-gray-100 rounded-lg p-6 shadow-md">
-        <div className="text-4xl text-indigo-900 mb-4">&quot;</div>
-        <p className="text-gray-700 mb-6 italic">{quote}</p>
-        <div className="text-right">
-            <p className="font-bold">{name}</p>
-            <p className="text-gray-600 text-sm">{title}</p>
-        </div>
+const TestimonialCard: React.FC<TestimonialCardProps> = ({
+  quote,
+  name,
+  title,
+}) => (
+  <div className="bg-gray-100 rounded-lg p-6 shadow-md">
+    <div className="text-4xl text-indigo-900 mb-4">"</div>
+    <p className="text-gray-700 mb-6 italic">{quote}</p>
+    <div className="text-right">
+      <p className="font-bold">{name}</p>
+      <p className="text-gray-600 text-sm">{title}</p>
     </div>
+  </div>
 );
-
 
 // --- Main Landing Page Component ---
 const Landing: React.FC = () => {
@@ -123,11 +162,14 @@ const Landing: React.FC = () => {
       {/* Navigation Bar */}
       <Navbar />
 
-      <main className="flex-grow pt-16"> {/* Adjusted padding for fixed navbar */}
+      <main className="flex-grow pt-16">
+        {" "}
+        {/* Adjusted padding for fixed navbar */}
         {/* Hero Section */}
         <section className="bg-indigo-900 text-white py-16 md:py-24" id="home">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center gap-8">
+              {/* --- LEFT SIDE: Text and Buttons --- */}
               <div className="md:w-1/2 mb-10 md:mb-0 text-center md:text-left">
                 <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
                   FuelFlow: Fuel Delivery Management System
@@ -151,20 +193,22 @@ const Landing: React.FC = () => {
                   </Link>
                 </div>
               </div>
+
+              {/* --- RIGHT SIDE: Image (UPDATED) --- */}
               <div className="md:w-1/2 flex justify-center">
-                {/* Use img tag - ensure /logo/logo.gif is in /public */}
+                {/* Use the standard img tag. Ensure the image is in the /public folder */}
                 <img
-                  src="/logo/logo.gif"
-                  alt="Fuel Delivery Management Dashboard"
-                  width={450} // Adjusted size
-                  height={360}
-                  className="rounded-lg shadow-xl max-w-full h-auto"
+                  src="/logo.gif" // <<< Make sure this path is correct!
+                  alt="FuelFlow Hero Section"
+                  width={500} // Adjust width/height as needed
+                  height={400}
+                  className="rounded-lg shadow-xl max-w-full h-auto" // Responsive classes
                 />
               </div>
+              {/* --- END OF UPDATED IMAGE SECTION --- */}
             </div>
           </div>
         </section>
-
         {/* Features Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
@@ -181,44 +225,45 @@ const Landing: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <FeatureCard
-                icon={<Truck className="h-10 w-10 text-indigo-600" />} // Updated color
+                icon={<Truck className="h-10 w-10 text-indigo-600" />}
                 title="Delivery Management"
                 description="Optimize routes, track deliveries in real-time, and manage your entire fleet from a single dashboard."
               />
               <FeatureCard
-                icon={<BarChart3 className="h-10 w-10 text-indigo-600" />} // Updated color
+                icon={<BarChart3 className="h-10 w-10 text-indigo-600" />}
                 title="Inventory Control"
                 description="Monitor fuel levels across all locations, set automatic reorder points, and eliminate stockouts."
               />
               <FeatureCard
-                icon={<Clock className="h-10 w-10 text-indigo-600" />} // Updated color
+                icon={<Clock className="h-10 w-10 text-indigo-600" />}
                 title="Order Processing"
                 description="Streamline order management with automated workflows, approvals, and customer notifications."
               />
               <FeatureCard
-                icon={<Shield className="h-10 w-10 text-indigo-600" />} // Updated color
+                icon={<Shield className="h-10 w-10 text-indigo-600" />}
                 title="Compliance & Safety"
                 description="Ensure regulatory compliance with built-in safety checklists and automated documentation."
               />
               <FeatureCard
-                icon={<Users className="h-10 w-10 text-indigo-600" />} // Updated color
+                icon={<Users className="h-10 w-10 text-indigo-600" />}
                 title="Customer Management"
                 description="Manage customer accounts, preferences, and payment terms in one centralized system."
               />
               <FeatureCard
-                icon={<BarChart3 className="h-10 w-10 text-indigo-600" />} // Updated color - Reused icon
+                icon={<BarChart3 className="h-10 w-10 text-indigo-600" />}
                 title="Reporting & Analytics"
                 description="Gain insights with comprehensive reports on sales, deliveries, inventory, and more."
               />
             </div>
           </div>
         </section>
-
         {/* Our Fuels Section */}
         <section className="py-16 bg-gray-100" id="our-fuels">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">Our Fuels</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">
+                Our Fuels
+              </h2>
               <p className="text-gray-600 max-w-3xl mx-auto text-lg">
                 We provide high-quality fuels to meet all your energy needs.
               </p>
@@ -227,76 +272,99 @@ const Landing: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Fuel Card 1 */}
               <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg">
-                 {/* Use img tag - ensure /fuels/premium.png is in /public */}
+                {/* Use img tag - ensure /fuels/premium.png is in /public */}
                 <img
                   src="/fuels/premium.png"
                   alt="Premium Fuel"
                   width={400}
                   height={200}
-                  className="w-full h-48 object-cover" // Use object-cover
+                  className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-indigo-900">Premium Fuel</h3>
+                  <h3 className="text-xl font-bold mb-2 text-indigo-900">
+                    Premium Fuel
+                  </h3>
                   <p className="text-gray-600 mb-4 text-sm">
                     High-octane premium fuel for superior engine performance and
                     efficiency.
                   </p>
                   <ul className="space-y-1 text-sm text-gray-700">
-                    <li className="flex items-center"><CheckIcon /> Higher octane rating (91-94)</li>
-                    <li className="flex items-center"><CheckIcon /> Enhanced engine protection</li>
-                    <li className="flex items-center"><CheckIcon /> Improved fuel efficiency</li>
+                    <li className="flex items-center">
+                      <CheckIcon /> Higher octane rating (91-94)
+                    </li>
+                    <li className="flex items-center">
+                      <CheckIcon /> Enhanced engine protection
+                    </li>
+                    <li className="flex items-center">
+                      <CheckIcon /> Improved fuel efficiency
+                    </li>
                   </ul>
                 </div>
               </div>
               {/* Fuel Card 2 */}
-               <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg">
+              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg">
                 <img
                   src="/fuels/regular.png"
                   alt="Regular Fuel"
-                   width={400}
+                  width={400}
                   height={200}
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-indigo-900">Regular Fuel</h3>
+                  <h3 className="text-xl font-bold mb-2 text-indigo-900">
+                    Regular Fuel
+                  </h3>
                   <p className="text-gray-600 mb-4 text-sm">
                     Standard fuel for everyday vehicles with reliable
                     performance.
                   </p>
-                   <ul className="space-y-1 text-sm text-gray-700">
-                    <li className="flex items-center"><CheckIcon /> Standard octane rating (87-89)</li>
-                    <li className="flex items-center"><CheckIcon /> Cost-effective option</li>
-                    <li className="flex items-center"><CheckIcon /> Suitable for most vehicles</li>
+                  <ul className="space-y-1 text-sm text-gray-700">
+                    <li className="flex items-center">
+                      <CheckIcon /> Standard octane rating (87-89)
+                    </li>
+                    <li className="flex items-center">
+                      <CheckIcon /> Cost-effective option
+                    </li>
+                    <li className="flex items-center">
+                      <CheckIcon /> Suitable for most vehicles
+                    </li>
                   </ul>
                 </div>
               </div>
-               {/* Fuel Card 3 */}
+              {/* Fuel Card 3 */}
               <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg">
                 <img
                   src="/fuels/diesel.png"
                   alt="Diesel Fuel"
-                   width={400}
+                  width={400}
                   height={200}
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-indigo-900">Diesel Fuel</h3>
+                  <h3 className="text-xl font-bold mb-2 text-indigo-900">
+                    Diesel Fuel
+                  </h3>
                   <p className="text-gray-600 mb-4 text-sm">
                     High-quality diesel for commercial vehicles and heavy
                     machinery.
                   </p>
                   <ul className="space-y-1 text-sm text-gray-700">
-                    <li className="flex items-center"><CheckIcon /> Higher energy density</li>
-                    <li className="flex items-center"><CheckIcon /> Better fuel economy</li>
-                    <li className="flex items-center"><CheckIcon /> Lower emissions options available</li>
+                    <li className="flex items-center">
+                      <CheckIcon /> Higher energy density
+                    </li>
+                    <li className="flex items-center">
+                      <CheckIcon /> Better fuel economy
+                    </li>
+                    <li className="flex items-center">
+                      <CheckIcon /> Lower emissions options available
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
         </section>
-
-         {/* Services Section */}
+        {/* Services Section */}
         <section className="py-16 bg-white" id="services">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
@@ -311,7 +379,7 @@ const Landing: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="flex gap-6 items-start">
-                <div className="bg-indigo-100 p-3 rounded-lg text-indigo-700 mt-1"> {/* Adjusted icon bg */}
+                <div className="bg-indigo-100 p-3 rounded-lg text-indigo-700 mt-1">
                   <Truck className="h-8 w-8" />
                 </div>
                 <div>
@@ -356,7 +424,7 @@ const Landing: React.FC = () => {
               </div>
 
               <div className="flex gap-6 items-start">
-                 <div className="bg-indigo-100 p-3 rounded-lg text-indigo-700 mt-1">
+                <div className="bg-indigo-100 p-3 rounded-lg text-indigo-700 mt-1">
                   <Shield className="h-8 w-8" />
                 </div>
                 <div>
@@ -381,9 +449,8 @@ const Landing: React.FC = () => {
             </div>
           </div>
         </section>
-
         {/* How It Works Section */}
-        <section className="py-16 bg-indigo-50" id="how-it-works"> {/* Changed background */}
+        <section className="py-16 bg-indigo-50" id="how-it-works">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">
@@ -395,7 +462,6 @@ const Landing: React.FC = () => {
               </p>
             </div>
 
-            {/* Adjusted grid for better flow on different screens */}
             <div className="flex flex-col md:flex-row items-stretch justify-center gap-4 md:gap-0">
               <StepCard
                 number="1"
@@ -427,8 +493,7 @@ const Landing: React.FC = () => {
             </div>
           </div>
         </section>
-
-         {/* About Us Section */}
+        {/* About Us Section */}
         <section className="py-16 bg-white" id="about-us">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -458,16 +523,20 @@ const Landing: React.FC = () => {
                     <div className="text-gray-600 text-sm">Clients</div>
                   </div>
                   <div className="text-center p-2 bg-indigo-50 rounded-lg">
-                     <div className="text-3xl font-bold text-indigo-900">
+                    <div className="text-3xl font-bold text-indigo-900">
                       35M+
                     </div>
-                    <div className="text-gray-600 text-sm">Gallons Delivered</div>
+                    <div className="text-gray-600 text-sm">
+                      Gallons Delivered
+                    </div>
                   </div>
                   <div className="text-center p-2 bg-indigo-50 rounded-lg">
-                     <div className="text-3xl font-bold text-indigo-900">
+                    <div className="text-3xl font-bold text-indigo-900">
                       98%
                     </div>
-                    <div className="text-gray-600 text-sm">Client Retention</div>
+                    <div className="text-gray-600 text-sm">
+                      Client Retention
+                    </div>
                   </div>
                   <div className="text-center p-2 bg-indigo-50 rounded-lg">
                     <div className="text-3xl font-bold text-indigo-900">
@@ -481,16 +550,26 @@ const Landing: React.FC = () => {
                   className="text-indigo-600 font-semibold hover:text-indigo-800 inline-flex items-center group"
                 >
                   Learn more about our story
-                   <svg className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                  <svg
+                    className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
                 </Link>
               </div>
               <div className="relative flex justify-center">
                 {/* Decorative background element */}
                 <div className="absolute -top-4 -left-4 w-32 h-32 bg-indigo-100 rounded-lg transform rotate-12 opacity-50 z-0"></div>
                 <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-indigo-100 rounded-full opacity-50 z-0"></div>
-                 {/* Use img tag - ensure /logo/logo.svg is in /public */}
+                {/* Use img tag - ensure /logo/logo.svg is in /public */}
                 <img
                   src="/logo/logo.svg"
                   alt="About FuelFlow - Logo"
@@ -502,8 +581,6 @@ const Landing: React.FC = () => {
             </div>
           </div>
         </section>
-
-
         {/* Testimonials Section */}
         <section className="py-16 bg-gray-100">
           <div className="container mx-auto px-4">
@@ -536,80 +613,158 @@ const Landing: React.FC = () => {
             </div>
           </div>
         </section>
-
         {/* Contact Us Section */}
         <section className="py-16 bg-white" id="contact-us">
-            <div className="container mx-auto px-4">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">
-                        Contact Us
-                    </h2>
-                    <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-                        Have questions or ready to get started? Reach out to our team today.
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    {/* Contact Form */}
-                    <div className="bg-gray-50 rounded-lg shadow-md p-8 border border-gray-200">
-                        <h3 className="text-2xl font-bold mb-6 text-indigo-900">Get in Touch</h3>
-                        <form onSubmit={(e) => { e.preventDefault();  }}>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                <div>
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                                    <input type="text" id="name" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your name" required />
-                                </div>
-                                <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                                    <input type="email" id="email" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="your@email.com" required />
-                                </div>
-                            </div>
-                            <div className="mb-6">
-                                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                                <input type="text" id="subject" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="How can we help?" required />
-                            </div>
-                            <div className="mb-6">
-                                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                                <textarea id="message" rows={4} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your message..." required></textarea>
-                            </div>
-                            <Button
-                                type="submit"
-                                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-md transition-colors shadow hover:shadow-md"
-                            >
-                                Send Message
-                            </Button>
-                        </form>
-                    </div>
-
-                     {/* Contact Info & Hours */}
-                    <div className="space-y-8">
-                        <div className="bg-white rounded-lg shadow-md p-8 border border-gray-200">
-                            <h3 className="text-2xl font-bold mb-6 text-indigo-900">
-                                Contact Information
-                            </h3>
-                            <div className="space-y-4">
-                                <InfoItem icon={<PhoneIcon />} title="Phone" lines={["+1 (555) 123-4567", "Mon-Fri, 8am-6pm EST"]} />
-                                <InfoItem icon={<MailIcon />} title="Email" lines={["support@fuelflow.com", "sales@fuelflow.com"]} />
-                                <InfoItem icon={<MapPinIcon />} title="Address" lines={["123 Fuel Street", "Houston, TX 77001"]} />
-                            </div>
-                        </div>
-
-                        <div className="bg-white rounded-lg shadow-md p-8 border border-gray-200">
-                             <h3 className="text-2xl font-bold mb-6 text-indigo-900">Business Hours</h3>
-                             <div className="space-y-2 text-sm">
-                                <div className="flex justify-between"><span className="font-medium text-gray-700">Monday - Friday:</span><span className="text-gray-600">8:00 AM - 6:00 PM</span></div>
-                                <div className="flex justify-between"><span className="font-medium text-gray-700">Saturday:</span><span className="text-gray-600">9:00 AM - 4:00 PM</span></div>
-                                <div className="flex justify-between"><span className="font-medium text-gray-700">Sunday:</span><span className="text-gray-600">Closed</span></div>
-                                <div className="pt-4 mt-4 border-t border-gray-200">
-                                    <p className="text-gray-600 font-medium">24/7 Emergency Delivery Service Available</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">
+                Contact Us
+              </h2>
+              <p className="text-gray-600 max-w-3xl mx-auto text-lg">
+                Have questions or ready to get started? Reach out to our team
+                today.
+              </p>
             </div>
-        </section>
 
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Contact Form */}
+              <div className="bg-gray-50 rounded-lg shadow-md p-8 border border-gray-200">
+                <h3 className="text-2xl font-bold mb-6 text-indigo-900">
+                  Get in Touch
+                </h3>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault(); /* Add form submission logic */
+                  }}
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        Full Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Your name"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="your@email.com"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="mb-6">
+                    <label
+                      htmlFor="subject"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Subject
+                    </label>
+                    <input
+                      type="text"
+                      id="subject"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                      placeholder="How can we help?"
+                      required
+                    />
+                  </div>
+                  <div className="mb-6">
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      rows={4}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                      placeholder="Your message..."
+                      required
+                    ></textarea>
+                  </div>
+                  <Button
+                    type="submit"
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-md transition-colors shadow hover:shadow-md"
+                  >
+                    Send Message
+                  </Button>
+                </form>
+              </div>
+
+              {/* Contact Info & Hours */}
+              <div className="space-y-8">
+                <div className="bg-white rounded-lg shadow-md p-8 border border-gray-200">
+                  <h3 className="text-2xl font-bold mb-6 text-indigo-900">
+                    Contact Information
+                  </h3>
+                  <div className="space-y-4">
+                    <InfoItem
+                      icon={<PhoneIcon className="h-5 w-5" />}
+                      title="Phone"
+                      lines={["+1 (555) 123-4567", "Mon-Fri, 8am-6pm EST"]}
+                    />
+                    <InfoItem
+                      icon={<MailIcon className="h-5 w-5" />}
+                      title="Email"
+                      lines={["support@fuelflow.com", "sales@fuelflow.com"]}
+                    />
+                    <InfoItem
+                      icon={<MapPinIcon className="h-5 w-5" />}
+                      title="Address"
+                      lines={["123 Fuel Street", "Houston, TX 77001"]}
+                    />
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg shadow-md p-8 border border-gray-200">
+                  <h3 className="text-2xl font-bold mb-6 text-indigo-900">
+                    Business Hours
+                  </h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="font-medium text-gray-700">
+                        Monday - Friday:
+                      </span>
+                      <span className="text-gray-600">8:00 AM - 6:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-medium text-gray-700">
+                        Saturday:
+                      </span>
+                      <span className="text-gray-600">9:00 AM - 4:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-medium text-gray-700">Sunday:</span>
+                      <span className="text-gray-600">Closed</span>
+                    </div>
+                    <div className="pt-4 mt-4 border-t border-gray-200">
+                      <p className="text-gray-600 font-medium">
+                        24/7 Emergency Delivery Service Available
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         {/* CTA Section */}
         <section className="py-16 bg-indigo-900 text-white">
           <div className="container mx-auto px-4 text-center">
@@ -636,41 +791,49 @@ const Landing: React.FC = () => {
             </div>
           </div>
         </section>
-
         <Footer />
       </main>
     </div>
   );
-}
+};
 
 // Helper component for check icons in fuel lists
 const CheckIcon = () => (
-     <svg className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-     </svg>
+  <svg
+    className="h-4 w-4 text-green-500 mr-2 flex-shrink-0"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={3}
+      d="M5 13l4 4L19 7"
+    />
+  </svg>
 );
 
 // Helper component for Contact Info items
-import { Phone as PhoneIcon, Mail as MailIcon, MapPin as MapPinIcon } from 'lucide-react'; // Ensure these are imported
-
 interface InfoItemProps {
-    icon: React.ReactNode;
-    title: string;
-    lines: string[];
+  icon: React.ReactNode;
+  title: string;
+  lines: string[];
 }
 const InfoItem: React.FC<InfoItemProps> = ({ icon, title, lines }) => (
-     <div className="flex items-start">
-        <div className="bg-indigo-100 p-3 rounded-lg mr-4 text-indigo-700">
-           {icon}
-        </div>
-        <div>
-            <h4 className="font-medium text-gray-800">{title}</h4>
-            {lines.map((line, index) => (
-                <p key={index} className="text-gray-600 text-sm">{line}</p>
-            ))}
-        </div>
+  <div className="flex items-start">
+    <div className="bg-indigo-100 p-3 rounded-lg mr-4 text-indigo-700">
+      {icon}
     </div>
+    <div>
+      <h4 className="font-medium text-gray-800">{title}</h4>
+      {lines.map((line, index) => (
+        <p key={index} className="text-gray-600 text-sm">
+          {line}
+        </p>
+      ))}
+    </div>
+  </div>
 );
-
 
 export default Landing;

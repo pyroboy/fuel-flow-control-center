@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -15,7 +14,7 @@ import Messages from "./pages/Messages";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
-import Landing from "./pages/Landing";
+import Landing from "./pages/landing";
 import Auth from "./pages/Auth";
 
 const queryClient = new QueryClient();
@@ -29,7 +28,7 @@ const App = () => (
         {/* Public routes */}
         <Route path="/landing" element={<Landing />} />
         <Route path="/auth" element={<Auth />} />
-        
+
         {/* Protected routes */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
@@ -43,7 +42,7 @@ const App = () => (
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
         </Route>
-        
+
         {/* Redirect from root to landing for first-time visitors */}
         <Route path="*" element={<NotFound />} />
       </Routes>
