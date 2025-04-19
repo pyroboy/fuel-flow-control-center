@@ -667,7 +667,7 @@ const Landing: React.FC = () => {
               {/* News/Promo Card 1 */}
               <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg border border-gray-200">
                 <img
-                  src="/news/news1.jpg"
+                  src="/news/soon.png"
                   alt="FuelFlow Mobile App Launch"
                   className="w-full h-48 object-cover"
                 />
@@ -694,7 +694,7 @@ const Landing: React.FC = () => {
               {/* News/Promo Card 2 */}
               <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg border border-gray-200">
                 <img
-                  src="/news/news2.jpg"
+                  src="/news/promotion.png"
                   alt="Summer Discount Program"
                   className="w-full h-48 object-cover"
                 />
@@ -721,7 +721,7 @@ const Landing: React.FC = () => {
               {/* News/Promo Card 3 */}
               <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg border border-gray-200">
                 <img
-                  src="/news/news3.jpg"
+                  src="/news/insights.png"
                   alt="Industry Conference"
                   className="w-full h-48 object-cover"
                 />
