@@ -54,9 +54,13 @@ const Auth: React.FC = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center">
-            <Droplet className="h-10 w-10 text-indigo-600" />
+            <img
+              src="/logo/logo.gif"
+              alt="FuelFlow Logo"
+              className="h-10 w-auto"
+            />
             <h1 className="ml-2 text-3xl font-bold text-indigo-900">
-              Fuel Flow
+              FuelFlow
             </h1>
           </div>
           <p className="mt-2 text-gray-600">Control Center Login</p>
