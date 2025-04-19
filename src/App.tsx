@@ -26,12 +26,13 @@ const App = () => (
       <Toaster />
       <Sonner />
       <Routes>
-        {/* Public routes */}
-        <Route path="/landing" element={<Landing />} />
+        {/* Public routes  */}
+        <Route path="/" element={<Landing />} />
+
         <Route path="/auth" element={<Auth />} />
         
         {/* Protected routes */}
-        <Route path="/" element={<MainLayout />}>
+        <Route path="/app" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="users" element={<Users />} />
           <Route path="fuel-settings" element={<FuelSettings />} />
@@ -44,8 +45,8 @@ const App = () => (
           <Route path="settings" element={<Settings />} />
         </Route>
         
-        {/* Redirect from root to landing for first-time visitors */}
-        <Route path="*" element={<NotFound />} />
+         {/* Redirect from root to landing for first-time visitors */}
+         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   </QueryClientProvider>
