@@ -90,8 +90,11 @@ const Footer: React.FC = () => (
     <div className="container mx-auto px-4">
       <div className="flex flex-col md:flex-row justify-between items-center">
         <div className="flex items-center space-x-2 mb-4 md:mb-0">
-          <Droplet className="h-6 w-6 text-indigo-400" />
-          <span className="text-xl font-semibold">FuelFlow</span>
+          <img
+            src="/logo/logo.svg"
+            alt="FuelFlow Logo"
+            className="h-8 w-auto"
+          />
         </div>
         <div className="text-sm text-gray-400 text-center md:text-right">
           © {new Date().getFullYear()} FuelFlow Control Center. All rights
