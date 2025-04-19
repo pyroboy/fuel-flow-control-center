@@ -26,11 +26,11 @@ const App = () => (
       <Sonner />
       <Routes>
         {/* Public routes */}
-        <Route path="/landing" element={<Landing />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/auth" element={<Auth />} />
 
         {/* Protected routes */}
-        <Route path="/" element={<MainLayout />}>
+        <Route path="/app" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="users" element={<Users />} />
           <Route path="fuel-settings" element={<FuelSettings />} />
