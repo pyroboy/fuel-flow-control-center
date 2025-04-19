@@ -15,7 +15,7 @@ import Messages from "./pages/Messages";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
-import Landing from "./pages/Landing";
+import Landing from "./pages/landing"; // Corrected casing based on previous interaction
 import Auth from "./pages/Auth";
 
 const queryClient = new QueryClient();
@@ -30,7 +30,7 @@ const App = () => (
         <Route path="/" element={<Landing />} />
 
         <Route path="/auth" element={<Auth />} />
-        
+
         {/* Protected routes */}
         <Route path="/app" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
@@ -45,7 +45,7 @@ const App = () => (
           <Route path="settings" element={<Settings />} />
         </Route>
         
-         {/* Redirect from root to landing for first-time visitors */}
+         {/* Catch-all route for 404 */}
          <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
