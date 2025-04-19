@@ -1,10 +1,9 @@
-
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import TopNavBar from './TopNavBar';
-import { UserRole } from '@/types';
-import { TooltipProvider } from '@/components/ui/tooltip';
+import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import TopNavBar from "./TopNavBar";
+import { UserRole } from "@/types";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 // Mock user role for demo purposes
 // In a real application, this would come from authentication
@@ -20,12 +19,16 @@ const MainLayout: React.FC = () => {
   return (
     <TooltipProvider>
       <div className="flex h-screen bg-gray-100">
-        <Sidebar 
-          userRole={userRole} 
-          collapsed={sidebarCollapsed} 
-          onToggle={toggleSidebar} 
+        <Sidebar
+          userRole={userRole}
+          collapsed={sidebarCollapsed}
+          onToggle={toggleSidebar}
         />
-        <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${sidebarCollapsed ? '' : ''}`}>
+        <div
+          className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
+            sidebarCollapsed ? "" : ""
+          }`}
+        >
           <TopNavBar />
           <main className="flex-1 overflow-auto">
             <div className="p-6">

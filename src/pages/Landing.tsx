@@ -17,34 +17,68 @@ import { Button } from "@/components/ui/button"; // Import Button from shadcn/ui
 
 // --- Placeholder Navbar ---
 const Navbar: React.FC = () => (
-  <nav className="bg-white border-b border-gray-200 fixed w-full z-20 top-0 left-0">
-    <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-      <Link to="/" className="flex items-center space-x-2">
-        {" "}
-        {/* Changed link to / */}
-        <div></div>
-        <span className="text-xl font-bold text-indigo-900">FuelFlow</span>
+  <nav className="bg-gray-900 text-white border-b border-gray-700 fixed w-full z-20 top-0 left-0">
+    <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+      <Link to="/landing" className="flex items-center space-x-2">
+        <img src="/logo/logo.svg" alt="FuelFlow Logo" className="h-8 w-auto" />
+        <span className="text-xl font-bold text-white">FuelFlow</span>
       </Link>
-      <div className="space-x-2">
-        {/* Add Nav links here if needed */}
-        <Link to="/auth">
-          <Button
-            variant="default"
-            className="bg-indigo-600 hover:bg-indigo-700"
+      {/* Navigation links - hidden on mobile */}
+      <div className="hidden md:flex space-x-6">
+        <a
+          href="#home"
+          className="text-gray-300 hover:text-white transition-colors"
+        >
+          Home
+        </a>
+        <a
+          href="#our-fuels"
+          className="text-gray-300 hover:text-white transition-colors"
+        >
+          Our Fuels
+        </a>
+        <a
+          href="#services"
+          className="text-gray-300 hover:text-white transition-colors"
+        >
+          Services
+        </a>
+        <a
+          href="#news-promos"
+          className="text-gray-300 hover:text-white transition-colors"
+        >
+          News & Promos
+        </a>
+        <a
+          href="#about-us"
+          className="text-gray-300 hover:text-white transition-colors"
+        >
+          About Us
+        </a>
+        <a
+          href="#contact-us"
+          className="text-gray-300 hover:text-white transition-colors"
+        >
+          Contact Us
+        </a>
+      </div>
+      {/* Mobile menu button */}
+      <div className="md:hidden">
+        <button className="text-white focus:outline-none">
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            Log In
-          </Button>
-        </Link>
-        <Link to="#">
-          {" "}
-          {/* Sign up link - Placeholder */}
-          <Button
-            variant="outline"
-            className="border-indigo-600 text-indigo-600 hover:bg-indigo-50"
-          >
-            Sign Up
-          </Button>
-        </Link>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16m-7 6h7"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   </nav>
@@ -198,7 +232,7 @@ const Landing: React.FC = () => {
               <div className="md:w-1/2 flex justify-center">
                 {/* Use the standard img tag. Ensure the image is in the /public folder */}
                 <img
-                  src="/logo.gif" // <<< Make sure this path is correct!
+                  src="/logo/logo.gif" // <<< Make sure this path is correct!
                   alt="FuelFlow Hero Section"
                   width={500} // Adjust width/height as needed
                   height={400}
@@ -258,6 +292,7 @@ const Landing: React.FC = () => {
           </div>
         </section>
         {/* Our Fuels Section */}
+        {/* Our Fuels Section */}
         <section className="py-16 bg-gray-100" id="our-fuels">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
@@ -272,13 +307,13 @@ const Landing: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Fuel Card 1 */}
               <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg">
-                {/* Use img tag - ensure /fuels/premium.png is in /public */}
+                {/* UPDATED img tag below */}
                 <img
-                  src="/fuels/premium.png"
+                  src="/fuels/premium.png" // Ensure this path is correct and image is in /public
                   alt="Premium Fuel"
-                  width={400}
-                  height={200}
-                  className="w-full h-48 object-cover"
+                  // Removed explicit width and height props
+                  // Removed fixed h-48 class
+                  className="w-full object-cover" // Kept w-full and object-cover
                 />
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2 text-indigo-900">
@@ -303,12 +338,13 @@ const Landing: React.FC = () => {
               </div>
               {/* Fuel Card 2 */}
               <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg">
+                {/* UPDATED img tag below */}
                 <img
-                  src="/fuels/regular.png"
+                  src="/fuels/regular.png" // Ensure this path is correct
                   alt="Regular Fuel"
-                  width={400}
-                  height={200}
-                  className="w-full h-48 object-cover"
+                  // Removed explicit width and height props
+                  // Removed fixed h-48 class
+                  className="w-full object-cover" // Kept w-full and object-cover
                 />
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2 text-indigo-900">
@@ -333,12 +369,13 @@ const Landing: React.FC = () => {
               </div>
               {/* Fuel Card 3 */}
               <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg">
+                {/* UPDATED img tag below */}
                 <img
-                  src="/fuels/diesel.png"
+                  src="/fuels/diesel.png" // Ensure this path is correct
                   alt="Diesel Fuel"
-                  width={400}
-                  height={200}
-                  className="w-full h-48 object-cover"
+                  // Removed explicit width and height props
+                  // Removed fixed h-48 class
+                  className="w-full object-cover" // Kept w-full and object-cover
                 />
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2 text-indigo-900">
@@ -613,8 +650,114 @@ const Landing: React.FC = () => {
             </div>
           </div>
         </section>
+        {/* News & Promos Section */}
+        <section className="py-16 bg-white" id="news-promos">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">
+                News & Promotions
+              </h2>
+              <p className="text-gray-600 max-w-3xl mx-auto text-lg">
+                Stay updated with the latest news and special offers from
+                FuelFlow.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* News/Promo Card 1 */}
+              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg border border-gray-200">
+                <img
+                  src="/news/news1.jpg"
+                  alt="FuelFlow Mobile App Launch"
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <div className="text-sm text-indigo-600 mb-2">
+                    March 15, 2023
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-gray-800">
+                    FuelFlow Mobile App Launch
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    We're excited to announce the launch of our new mobile app,
+                    making fuel management easier than ever.
+                  </p>
+                  <Link
+                    to="#"
+                    className="text-indigo-600 font-medium hover:text-indigo-800"
+                  >
+                    Read More →
+                  </Link>
+                </div>
+              </div>
+
+              {/* News/Promo Card 2 */}
+              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg border border-gray-200">
+                <img
+                  src="/news/news2.jpg"
+                  alt="Summer Discount Program"
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <div className="text-sm text-indigo-600 mb-2">
+                    June 1, 2023
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-gray-800">
+                    Summer Discount Program
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    Take advantage of our summer discount program with special
+                    rates for high-volume customers.
+                  </p>
+                  <Link
+                    to="#"
+                    className="text-indigo-600 font-medium hover:text-indigo-800"
+                  >
+                    Read More →
+                  </Link>
+                </div>
+              </div>
+
+              {/* News/Promo Card 3 */}
+              <div className="bg-white rounded-lg overflow-hidden shadow-md transition-shadow hover:shadow-lg border border-gray-200">
+                <img
+                  src="/news/news3.jpg"
+                  alt="Industry Conference"
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <div className="text-sm text-indigo-600 mb-2">
+                    September 10, 2023
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-gray-800">
+                    Join Us at FuelTech 2023
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    Meet our team at the upcoming FuelTech 2023 conference and
+                    see our latest innovations.
+                  </p>
+                  <Link
+                    to="#"
+                    className="text-indigo-600 font-medium hover:text-indigo-800"
+                  >
+                    Read More →
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center mt-12">
+              <Link
+                to="#"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-md inline-block transition-colors shadow hover:shadow-md"
+              >
+                View All News & Promotions
+              </Link>
+            </div>
+          </div>
+        </section>
         {/* Contact Us Section */}
-        <section className="py-16 bg-white" id="contact-us">
+        <section className="py-16 bg-gray-100" id="contact-us">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">
