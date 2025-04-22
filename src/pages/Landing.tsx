@@ -21,7 +21,7 @@ const Navbar: React.FC = () => (
     <div className="container mx-auto px-4 py-4 flex justify-between items-center">
       <Link to="/landing" className="flex items-center space-x-2">
         <img src="/logo/logo.svg" alt="FuelFlow Logo" className="h-8 w-auto" />
-        <span className="text-xl font-bold text-white">FuelFlow</span>
+        <span className="text-xl font-bold text-white">FuelFlow hehe</span>
       </Link>
       {/* Navigation links - hidden on mobile */}
       <div className="hidden md:flex space-x-6">
