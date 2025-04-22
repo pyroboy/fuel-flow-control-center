@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { UserRole } from "@/types";
 import { Droplet, ChevronRight } from "lucide-react";
 import {
@@ -15,9 +15,30 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
+import { useAuthContext } from "@/context/AuthContext";
+
+// Helper function to get the correct dashboard path based on role
+const getDashboardPathForRole = (role: UserRole): string => {
+  switch (role) {
+    case UserRole.Admin:
+      return "/app/admin-dashboard";
+    case UserRole.OfficeStaff:
+      return "/app/office-staff-dashboard";
+    case UserRole.DepotStaff:
+      return "/app/depot-staff-dashboard";
+    case UserRole.GSO:
+      return "/app/gso-dashboard";
+    case UserRole.GSOStaff:
+      return "/app/gso-staff-dashboard";
+    default:
+      return "/app/admin-dashboard"; // Fallback
+  }
+};
 
 const Auth: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuthContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.Admin);
@@ -25,11 +46,23 @@ const Auth: React.FC = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // In a real app, you would validate credentials here
-    // For demo purposes, we'll just navigate to the dashboard
+    // Create a mock user
+    const mockUserData = {
+      id: `mock_${Date.now()}`,
+      name: `Mock ${getRoleDisplayName(selectedRole)}`,
+      role: selectedRole,
+    };
+
+    // Call the login function from AuthContext
+    login(mockUserData);
+
+    // Get the target path based on role
+    const targetPath = getDashboardPathForRole(selectedRole);
 
     toast.success(`Logged in as ${getRoleDisplayName(selectedRole)}`);
-    navigate("/");
+
+    // Navigate to the appropriate dashboard
+    navigate(targetPath, { replace: true });
   };
 
   const getRoleDisplayName = (role: UserRole): string => {

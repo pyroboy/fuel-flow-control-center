@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button"; // Import Button from shadcn/ui
 const Navbar: React.FC = () => (
   <nav className="bg-gray-900 text-white border-b border-gray-700 fixed w-full z-20 top-0 left-0">
     <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-      <Link to="/landing" className="flex items-center space-x-2">
+      <Link to="/" className="flex items-center space-x-2">
         <img src="/logo/logo.svg" alt="FuelFlow Logo" className="h-8 w-auto" />
         <span className="text-xl font-bold text-white">FuelFlow</span>
       </Link>

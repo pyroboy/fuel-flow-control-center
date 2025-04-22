@@ -15,10 +15,12 @@ import {
   LogOut,
   Home,
   Droplet,
+  Building,
+  Store,
 } from "lucide-react";
 
 interface SidebarProps {
-  userRole: UserRole;
+  userRole: UserRole | null;
   collapsed: boolean;
   onToggle: () => void;
 }
@@ -36,37 +38,55 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, collapsed, onToggle }) => {
   const navItems: NavItem[] = [
     {
       title: "Dashboard",
-      path: "/",
+      path: "/app/admin-dashboard",
       icon: <Home size={20} />,
-      roles: [
-        UserRole.Admin,
-        UserRole.OfficeStaff,
-        UserRole.DepotStaff,
-        UserRole.GSO,
-        UserRole.GSOStaff,
-      ],
+      roles: [UserRole.Admin],
+    },
+    {
+      title: "Dashboard",
+      path: "/app/office-staff-dashboard",
+      icon: <Home size={20} />,
+      roles: [UserRole.OfficeStaff],
+    },
+    {
+      title: "Dashboard",
+      path: "/app/depot-staff-dashboard",
+      icon: <Home size={20} />,
+      roles: [UserRole.DepotStaff],
+    },
+    {
+      title: "GSO Dashboard",
+      path: "/app/gso-dashboard",
+      icon: <Building size={20} />,
+      roles: [UserRole.GSO],
+    },
+    {
+      title: "Staff Dashboard",
+      path: "/app/gso-staff-dashboard",
+      icon: <Store size={20} />,
+      roles: [UserRole.GSOStaff],
     },
     {
       title: "User Management",
-      path: "/users",
+      path: "/app/users",
       icon: <Users size={20} />,
       roles: [UserRole.Admin, UserRole.GSO],
     },
     {
       title: "Fuel Settings",
-      path: "/fuel-settings",
+      path: "/app/fuel-settings",
       icon: <Droplet size={20} />,
       roles: [UserRole.Admin, UserRole.OfficeStaff],
     },
     {
       title: "Truck Records",
-      path: "/trucks",
+      path: "/app/trucks",
       icon: <Truck size={20} />,
-      roles: [UserRole.Admin, UserRole.DepotStaff],
+      roles: [UserRole.Admin, UserRole.DepotStaff, UserRole.OfficeStaff],
     },
     {
       title: "Orders",
-      path: "/orders",
+      path: "/app/orders",
       icon: <ShoppingCart size={20} />,
       roles: [
         UserRole.Admin,
@@ -78,13 +98,13 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, collapsed, onToggle }) => {
     },
     {
       title: "Inventory",
-      path: "/inventory",
+      path: "/app/inventory",
       icon: <Database size={20} />,
-      roles: [UserRole.Admin, UserRole.DepotStaff],
+      roles: [UserRole.Admin, UserRole.DepotStaff, UserRole.OfficeStaff],
     },
     {
       title: "Reports",
-      path: "/reports",
+      path: "/app/reports",
       icon: <BarChart size={20} />,
       roles: [
         UserRole.Admin,
@@ -95,7 +115,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, collapsed, onToggle }) => {
     },
     {
       title: "Messages",
-      path: "/messages",
+      path: "/app/messages",
       icon: <MessageCircle size={20} />,
       roles: [
         UserRole.Admin,
@@ -107,9 +127,9 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, collapsed, onToggle }) => {
     },
   ];
 
-  const filteredNavItems = navItems.filter((item) =>
-    item.roles.includes(userRole)
-  );
+  const filteredNavItems = userRole
+    ? navItems.filter((item) => item.roles.includes(userRole))
+    : [];
 
   return (
     <aside

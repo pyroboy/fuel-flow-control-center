@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { User, Settings, LogOut } from "lucide-react";
 import { UserRole } from "@/types";
 import {
@@ -11,16 +11,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { useAuthContext } from "@/context/AuthContext";
 
-// This would normally come from an auth context
-const mockUserData = {
-  name: "John Doe",
-  role: UserRole.Admin,
-  avatarUrl: null, // In a real app, this would be a URL to the user's avatar
-  initials: "JD",
-};
-
-const getRoleDisplayName = (role: UserRole): string => {
+const getRoleDisplayName = (role: UserRole | null): string => {
   switch (role) {
     case UserRole.Admin:
       return "Administrator";
@@ -37,23 +30,38 @@ const getRoleDisplayName = (role: UserRole): string => {
   }
 };
 
+const getInitials = (name: string | null): string => {
+  if (!name) return "U";
+
+  const parts = name.split(" ");
+  if (parts.length >= 2) {
+    return `${parts[0].charAt(0)}${parts[parts.length - 1].charAt(0)}`;
+  }
+  return name.substring(0, 2).toUpperCase();
+};
+
 const TopNavBar: React.FC = () => {
+  const { currentUser, logout } = useAuthContext();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/auth", { replace: true });
+  };
+
   return (
     <div className="h-16 border-b border-gray-200 bg-white px-4 flex items-center justify-end">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-10 gap-2 px-2">
             <Avatar className="h-8 w-8">
-              <AvatarImage
-                src={mockUserData.avatarUrl || ""}
-                alt={mockUserData.name}
-              />
-              <AvatarFallback>{mockUserData.initials}</AvatarFallback>
+              <AvatarImage src="" alt={currentUser?.name || "User"} />
+              <AvatarFallback>{getInitials(currentUser?.name)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col items-start text-sm">
-              <span className="font-medium">{mockUserData.name}</span>
+              <span className="font-medium">{currentUser?.name || "User"}</span>
               <span className="text-xs text-gray-500">
-                {getRoleDisplayName(mockUserData.role)}
+                {getRoleDisplayName(currentUser?.role)}
               </span>
             </div>
           </Button>
@@ -72,7 +80,7 @@ const TopNavBar: React.FC = () => {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={handleLogout}>
             <LogOut className="mr-2 h-4 w-4" />
             <span>Logout</span>
           </DropdownMenuItem>

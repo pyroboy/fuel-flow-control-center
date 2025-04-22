@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import TopNavBar from "./TopNavBar";
-import { UserRole } from "@/types";
 import { TooltipProvider } from "@/components/ui/tooltip";
-
-// Mock user role for demo purposes
-// In a real application, this would come from authentication
-const userRole = UserRole.Admin;
+import { useAuthContext } from "@/context/AuthContext";
 
 const MainLayout: React.FC = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const { currentUser } = useAuthContext();
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
@@ -20,7 +17,7 @@ const MainLayout: React.FC = () => {
     <TooltipProvider>
       <div className="flex h-screen bg-gray-100">
         <Sidebar
-          userRole={userRole}
+          userRole={currentUser?.role}
           collapsed={sidebarCollapsed}
           onToggle={toggleSidebar}
         />
