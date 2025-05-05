@@ -23,6 +23,7 @@ import OfficeStaffDashboard from "./pages/OfficeStaffDashboard";
 import DepotStaffDashboard from "./pages/DepotStaffDashboard";
 import GSODashboard from "./pages/GSODashboard";
 import GSOStaffDashboard from "./pages/GSOStaffDashboard";
+import RegisterGSO from "@/pages/RegisterGSO";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
           {/* Public routes */}
           <Route path="/" element={<Landing />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/register-gso" element={<RegisterGSO />} />
 
           {/* Protected routes (now prefixed with /app) */}
           <Route

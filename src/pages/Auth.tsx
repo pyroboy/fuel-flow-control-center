@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import { useAuthContext } from "@/context/AuthContext";
+import { Link } from "react-router-dom";
 
 // Helper function to get the correct dashboard path based on role
 const getDashboardPathForRole = (role: UserRole): string => {
@@ -193,6 +194,15 @@ const Auth: React.FC = () => {
               </Button>
             </CardFooter>
           </form>
+          <div className="mt-4 text-center text-sm">
+            Don't have an account?{" "}
+            <Link
+              to="/register-gso"
+              className="text-indigo-600 hover:text-indigo-800"
+            >
+              Create Account
+            </Link>
+          </div>
         </Card>
       </div>
     </div>

@@ -223,7 +223,7 @@ const Landing: React.FC = () => {
                     Log In
                   </Link>
                   <Link
-                    to="#" // Placeholder
+                    to="/register-gso" // Updated to point to registration page
                     className="bg-transparent hover:bg-white/10 border border-white text-white font-bold py-3 px-6 rounded-md text-center transition-colors"
                   >
                     Sign Up

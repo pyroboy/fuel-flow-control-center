@@ -37,6 +37,13 @@ import {
 } from "@/components/ui/form";
 import { Loader2 } from "lucide-react";
 
+// Define roles that Admin can create
+const adminCreatableRoles = [
+  UserRole.Admin,
+  UserRole.OfficeStaff,
+  UserRole.DepotStaff,
+];
+
 // --- Mock API Function (Replace with your actual API call) ---
 async function createUserAPI(
   userData: AddUserFormValues,
@@ -214,18 +221,29 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {/* Only show GSOStaff option if current user is GSO */}
                       {currentUserRole === UserRole.GSO ? (
+                        // GSO can only create GSOStaff
                         <SelectItem value={UserRole.GSOStaff}>
                           GSO Staff
                         </SelectItem>
-                      ) : (
-                        // Admin can see all roles
-                        Object.entries(UserRole).map(([key, value]) => (
-                          <SelectItem key={value} value={value}>
-                            {key.replace(/([A-Z])/g, " $1").trim()}
+                      ) : currentUserRole === UserRole.Admin ? (
+                        // Admin can only create internal staff
+                        adminCreatableRoles.map((roleValue) => (
+                          <SelectItem key={roleValue} value={roleValue}>
+                            {roleValue
+                              .split("_")
+                              .map(
+                                (word) =>
+                                  word.charAt(0).toUpperCase() + word.slice(1)
+                              )
+                              .join(" ")}
                           </SelectItem>
                         ))
+                      ) : (
+                        // Fallback for other roles (should not happen in practice)
+                        <SelectItem value="" disabled>
+                          No roles available
+                        </SelectItem>
                       )}
                     </SelectContent>
                   </Select>
