@@ -51,7 +51,37 @@ const Auth: React.FC = () => {
       id: `mock_${Date.now()}`,
       name: `Mock ${getRoleDisplayName(selectedRole)}`,
       role: selectedRole,
+      email: `${selectedRole.replace("_", "")}@fuelflow.test`, // Generate mock email
+      managedStationId: null,
+      assigned_station_id: null,
     };
+
+    // If logging in as GSO, assign a mock station they manage
+    if (selectedRole === UserRole.GSO) {
+      mockUserData.managedStationId = "gso_sta_1";
+      mockUserData.name = "Mock Diana Prince";
+      mockUserData.id = "usr_4";
+      mockUserData.email = "diana.prince@gso.test";
+    }
+
+    // If logging in as GSOStaff, assign them to a station
+    if (selectedRole === UserRole.GSOStaff) {
+      mockUserData.assigned_station_id = "gso_sta_1";
+      mockUserData.name = "Mock Ethan Hunt";
+      mockUserData.id = "usr_5";
+      mockUserData.email = "ethan.hunt@staff.test";
+    }
+
+    // Add specific emails for other roles
+    if (selectedRole === UserRole.Admin) {
+      mockUserData.email = "admin@fuelflow.test";
+    }
+    if (selectedRole === UserRole.OfficeStaff) {
+      mockUserData.email = "office@fuelflow.test";
+    }
+    if (selectedRole === UserRole.DepotStaff) {
+      mockUserData.email = "depot@fuelflow.test";
+    }
 
     // Call the login function from AuthContext
     login(mockUserData);

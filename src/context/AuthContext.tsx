@@ -5,12 +5,22 @@ interface User {
   id: string | null;
   name: string | null;
   role: UserRole | null;
+  email: string | null;
+  managedStationId?: string | null;
+  assigned_station_id?: string | null;
 }
 
 interface AuthContextType {
   currentUser: User | null;
   isAuthenticated: boolean;
-  login: (userData: { id: string; name: string; role: UserRole }) => void;
+  login: (userData: {
+    id: string;
+    name: string;
+    role: UserRole;
+    email: string;
+    managedStationId?: string | null;
+    assigned_station_id?: string | null;
+  }) => void;
   logout: () => void;
 }
 
@@ -32,11 +42,21 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-  const login = (userData: { id: string; name: string; role: UserRole }) => {
+  const login = (userData: {
+    id: string;
+    name: string;
+    role: UserRole;
+    email: string;
+    managedStationId?: string | null;
+    assigned_station_id?: string | null;
+  }) => {
     setCurrentUser({
       id: userData.id,
       name: userData.name,
       role: userData.role,
+      email: userData.email,
+      managedStationId: userData.managedStationId,
+      assigned_station_id: userData.assigned_station_id,
     });
   };
 
