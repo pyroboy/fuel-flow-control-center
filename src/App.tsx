@@ -24,6 +24,7 @@ import DepotStaffDashboard from "./pages/DepotStaffDashboard";
 import GSODashboard from "./pages/GSODashboard";
 import GSOStaffDashboard from "./pages/GSOStaffDashboard";
 import RegisterGSO from "@/pages/RegisterGSO";
+import PlaceOrder from "@/pages/PlaceOrder";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,7 @@ const App = () => (
             <Route path="messages" element={<Messages />} />
             <Route path="profile" element={<Profile />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="place-order" element={<PlaceOrder />} />
           </Route>
 
           {/* Fallback 404 */}

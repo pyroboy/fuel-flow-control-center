@@ -83,9 +83,10 @@ const Auth: React.FC = () => {
     if (selectedRole === UserRole.DepotStaff) {
       mockUserData.email = "depot@fuelflow.test";
     }
-
-    // Call the login function from AuthContext
-    login(mockUserData);
+    +(
+      // Call the login function from AuthContext
+      login(mockUserData)
+    );
 
     // Get the target path based on role
     const targetPath = getDashboardPathForRole(selectedRole);

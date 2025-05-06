@@ -151,12 +151,29 @@ const Users: React.FC = () => {
     alert(`Edit action for user ${userId} not implemented.`);
   };
 
-  const handleDeleteUser = (userId: string) => {
-    console.log("Delete user:", userId);
-    // Filter out the user from the local state
-    setMockUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
-    alert(`Mock delete action for user ${userId}.`);
-    // In a real app, call API mutation here
+  // Toggle user active status instead of delete
+  const handleToggleUserActiveStatus = (userId: string) => {
+    setMockUsers((prevUsers) =>
+      prevUsers.map((user) =>
+        user.id === userId
+          ? {
+              ...user,
+              is_active: !user.is_active,
+              updated_at: new Date().toISOString(),
+            }
+          : user
+      )
+    );
+    const toggledUser = mockUsers.find((user) => user.id === userId);
+    if (toggledUser) {
+      if (toggledUser.is_active) {
+        // Was active, now disabling
+        alert(`User ${toggledUser.full_name} has been disabled.`);
+      } else {
+        // Was inactive, now enabling
+        alert(`User ${toggledUser.full_name} has been enabled.`);
+      }
+    }
   };
 
   return (
@@ -258,10 +275,16 @@ const Users: React.FC = () => {
                               Edit
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                              onClick={() => handleDeleteUser(user.id)}
-                              className="text-red-600 focus:text-red-600 focus:bg-red-50"
+                              onClick={() =>
+                                handleToggleUserActiveStatus(user.id)
+                              }
+                              className={
+                                user.is_active
+                                  ? "text-red-600 focus:text-red-600 focus:bg-red-50"
+                                  : "text-green-600 focus:text-green-600 focus:bg-green-50"
+                              }
                             >
-                              Delete
+                              {user.is_active ? "Disable" : "Enable"} User
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

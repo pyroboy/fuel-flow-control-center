@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu"; // Import Dropdown (for future use)
 import { PlusCircle, MoreHorizontal } from "lucide-react"; // Import MoreHorizontal (for future use)
 import { toast } from "sonner"; // Use sonner for feedback
+import { useNavigate } from "react-router-dom";
 
 // Import necessary types
 import {
@@ -266,10 +267,11 @@ const Orders: React.FC = () => {
     initialMockOrderItems
   );
 
+  const navigate = useNavigate();
+
   // Placeholder handler for the "New Order" button
   const handleNewOrder = () => {
-    toast.info("New Order functionality not implemented yet.");
-    // TODO: Implement logic to open a new order form/modal
+    navigate("/app/place-order");
   };
 
   // Calculate total order value (example derived data) - you'd likely do this per order

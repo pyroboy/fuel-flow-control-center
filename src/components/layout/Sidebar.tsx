@@ -17,6 +17,7 @@ import {
   Droplet,
   Building,
   Store,
+  PlusCircle,
 } from "lucide-react";
 
 interface SidebarProps {
