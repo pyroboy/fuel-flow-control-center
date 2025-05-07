@@ -24,9 +24,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"; // Import Dropdown (for future use)
-import { PlusCircle, MoreHorizontal } from "lucide-react"; // Import MoreHorizontal (for future use)
+import { PlusCircle, MoreHorizontal, CheckCircle } from "lucide-react"; // Import MoreHorizontal (for future use)
 import { toast } from "sonner"; // Use sonner for feedback
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "@/context/AuthContext"; // Import useAuthContext
 
 // Import necessary types
 import {
@@ -37,6 +38,8 @@ import {
   PaymentMethod,
   PaymentStatus,
   UserRole,
+  GasStation,
+  Profile,
 } from "@/types";
 
 // --- Mock Data Integrated Here ---
@@ -266,8 +269,70 @@ const Orders: React.FC = () => {
   const [orderItems, setOrderItems] = useState<OrderItem[]>(
     initialMockOrderItems
   );
+  const { currentUser } = useAuthContext(); // Get current user from context
 
   const navigate = useNavigate();
+
+  // Memoized filtered orders based on user role
+  const filteredOrders = useMemo(() => {
+    if (!currentUser || !currentUser.role) {
+      return []; // No user or role, show nothing
+    }
+
+    // Get GSO station IDs outside the case block
+    const gsoStationIds = Object.entries(mockGasStationMap)
+      .filter(([_, station]) => station.ownerId === currentUser.id)
+      .map(([stationId, _]) => stationId);
+
+    switch (currentUser.role) {
+      case UserRole.Admin:
+      case UserRole.OfficeStaff: // Office staff also sees all for confirmation/processing
+      case UserRole.DepotStaff: // Depot staff might need to see confirmed/scheduled orders
+        return orders; // Admins, Office Staff, Depot Staff see all (adjust Depot if needed later)
+
+      case UserRole.GSO:
+        // GSO sees all orders for stations they own
+        return orders.filter((order) =>
+          gsoStationIds.includes(order.gas_station_id)
+        );
+
+      case UserRole.GSOStaff:
+        // GSO Staff sees only orders for their assigned station
+        if (!currentUser.assigned_station_id) return [];
+        return orders.filter(
+          (order) => order.gas_station_id === currentUser.assigned_station_id
+        );
+
+      default:
+        return []; // Should not happen for valid roles
+    }
+  }, [currentUser, orders, mockGasStationMap]);
+
+  // Handler for confirming an order
+  const handleConfirmOrder = (orderId: string) => {
+    // Ensure the current user is Office Staff before proceeding
+    if (currentUser?.role !== UserRole.OfficeStaff) {
+      toast.error("Only Office Staff can confirm orders.");
+      return;
+    }
+
+    setOrders((prevOrders) =>
+      prevOrders.map((order) => {
+        if (order.id === orderId && order.status === OrderStatus.Pending) {
+          console.log(`Confirming order ${orderId} by user ${currentUser?.id}`);
+          return {
+            ...order,
+            status: OrderStatus.Confirmed,
+            confirmed_by_user_id: currentUser?.id || "unknown_staff",
+            updated_at: new Date().toISOString(),
+          };
+        }
+        return order;
+      })
+    );
+
+    toast.success(`Order ${orderId} confirmed successfully!`);
+  };
 
   // Placeholder handler for the "New Order" button
   const handleNewOrder = () => {
@@ -308,7 +373,7 @@ const Orders: React.FC = () => {
         <CardHeader>
           <CardTitle>Order Dashboard</CardTitle>
           <CardDescription>
-            Displaying {orders.length} mock orders
+            Displaying {filteredOrders.length} orders based on your role.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -326,14 +391,14 @@ const Orders: React.FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {orders.length === 0 ? (
+              {filteredOrders.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={8} className="h-24 text-center">
                     No orders found.
                   </TableCell>
                 </TableRow>
               ) : (
-                orders.map((order) => (
+                filteredOrders.map((order) => (
                   <TableRow key={order.id}>
                     <TableCell className="font-medium">{order.id}</TableCell>
                     <TableCell>
@@ -398,6 +463,19 @@ const Orders: React.FC = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
+                          {/* Conditionally render Confirm Order for Office Staff on Pending orders */}
+                          {currentUser?.role === UserRole.OfficeStaff &&
+                            order.status === OrderStatus.Pending && (
+                              <DropdownMenuItem
+                                onClick={() => handleConfirmOrder(order.id)}
+                                className="text-green-600 focus:text-green-700 focus:bg-green-50"
+                              >
+                                <CheckCircle className="mr-2 h-4 w-4" />
+                                Confirm Order
+                              </DropdownMenuItem>
+                            )}
+
                           <DropdownMenuItem
                             onClick={() =>
                               alert(`View details for order: ${order.id}`)
