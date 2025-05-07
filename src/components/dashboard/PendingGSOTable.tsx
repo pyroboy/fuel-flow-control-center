@@ -10,8 +10,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RegistrationStatus } from "@/types";
+import { Eye } from "lucide-react";
 
-interface PendingGSO {
+export interface PendingGSO {
   id: string;
   name: string;
   owner: string;
@@ -24,12 +25,14 @@ interface PendingGSOTableProps {
   pendingGSOs: PendingGSO[];
   onApproveGSO: (userId: string) => void;
   onRejectGSO: (userId: string) => void;
+  onViewGSO: (gsoData: PendingGSO) => void;
 }
 
 const PendingGSOTable: React.FC<PendingGSOTableProps> = ({
   pendingGSOs,
   onApproveGSO,
   onRejectGSO,
+  onViewGSO,
 }) => {
   return (
     <Table>
@@ -62,8 +65,12 @@ const PendingGSOTable: React.FC<PendingGSOTableProps> = ({
             </TableCell>
             <TableCell className="text-right">
               <div className="flex justify-end gap-2">
-                <Button size="sm" variant="outline">
-                  View
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => onViewGSO(gso)}
+                >
+                  <Eye className="mr-1 h-4 w-4" /> View
                 </Button>
                 <Button
                   size="sm"

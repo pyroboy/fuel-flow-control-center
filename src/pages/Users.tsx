@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"; // Import Table components
-import { UserPlus, MoreHorizontal } from "lucide-react"; // Import MoreHorizontal for actions
+import { UserPlus, MoreHorizontal, Eye } from "lucide-react"; // Import MoreHorizontal and Eye for actions
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +26,7 @@ import AddUserModal, {
 import { useAuthContext } from "@/context/AuthContext"; // Import auth context hook
 
 import { Profile, UserRole, RegistrationStatus } from "@/types"; // Import types
+import ViewUserDetailsModal from "@/components/modals/ViewUserDetailsModal";
 
 // --- Mock Data ---
 const initialMockUsers: Profile[] = [
@@ -109,6 +110,9 @@ const formatRole = (role: UserRole): string => {
 
 const Users: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewUserModalOpen, setIsViewUserModalOpen] = useState(false);
+  const [selectedUserForView, setSelectedUserForView] =
+    useState<Profile | null>(null);
   const [mockUsers, setMockUsers] = useState<Profile[]>(initialMockUsers);
   const { currentUser } = useAuthContext(); // Get logged-in user info
 
@@ -145,10 +149,10 @@ const Users: React.FC = () => {
     console.log("User added successfully:", newUser);
   };
 
-  const handleEditUser = (userId: string) => {
-    console.log("Edit user:", userId);
-    // TODO: Implement edit logic (e.g., open modal with pre-filled data)
-    alert(`Edit action for user ${userId} not implemented.`);
+  // Handler for viewing user details
+  const handleViewDetails = (user: Profile) => {
+    setSelectedUserForView(user);
+    setIsViewUserModalOpen(true);
   };
 
   // Toggle user active status instead of delete
@@ -270,9 +274,9 @@ const Users: React.FC = () => {
                           <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem
-                              onClick={() => handleEditUser(user.id)}
+                              onClick={() => handleViewDetails(user)}
                             >
-                              Edit
+                              <Eye className="mr-2 h-4 w-4" /> View Details
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={() =>
@@ -309,6 +313,15 @@ const Users: React.FC = () => {
             ? currentUser.managedStationId
             : null
         }
+      />
+      {/* Render View User Details Modal */}
+      <ViewUserDetailsModal
+        isOpen={isViewUserModalOpen}
+        onClose={() => {
+          setIsViewUserModalOpen(false);
+          setSelectedUserForView(null);
+        }}
+        user={selectedUserForView}
       />
     </>
   );
