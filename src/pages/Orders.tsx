@@ -273,6 +273,11 @@ const Orders: React.FC = () => {
 
   const navigate = useNavigate();
 
+  // Determine if the current user can place orders
+  const canPlaceOrder =
+    currentUser?.role === UserRole.GSO ||
+    currentUser?.role === UserRole.GSOStaff;
+
   // Memoized filtered orders based on user role
   const filteredOrders = useMemo(() => {
     if (!currentUser || !currentUser.role) {
@@ -361,12 +366,14 @@ const Orders: React.FC = () => {
           <h1 className="text-3xl font-bold text-gray-800">Order Management</h1>
           <p className="text-gray-600 mt-1">Track and manage fuel orders</p>
         </div>
-        <Button
-          className="bg-indigo-900 hover:bg-indigo-800"
-          onClick={handleNewOrder}
-        >
-          <PlusCircle className="mr-2 h-4 w-4" /> New Order
-        </Button>
+        {canPlaceOrder && (
+          <Button
+            className="bg-indigo-900 hover:bg-indigo-800"
+            onClick={handleNewOrder}
+          >
+            <PlusCircle className="mr-2 h-4 w-4" /> New Order
+          </Button>
+        )}
       </div>
 
       <Card>
