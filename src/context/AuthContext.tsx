@@ -1,5 +1,13 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 import { UserRole } from "@/types";
+
+const LOCAL_STORAGE_KEY = "fuelFlowCurrentUser";
 
 interface User {
   id: string | null;
@@ -13,20 +21,15 @@ interface User {
 interface AuthContextType {
   currentUser: User | null;
   isAuthenticated: boolean;
-  login: (userData: {
-    id: string;
-    name: string;
-    role: UserRole;
-    email: string;
-    managedStationId?: string | null;
-    assigned_station_id?: string | null;
-  }) => void;
+  isLoading: boolean;
+  login: (userData: User) => void;
   logout: () => void;
 }
 
 const defaultContext: AuthContextType = {
   currentUser: null,
   isAuthenticated: false,
+  isLoading: true,
   login: () => {},
   logout: () => {},
 };
@@ -41,27 +44,40 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const login = (userData: {
-    id: string;
-    name: string;
-    role: UserRole;
-    email: string;
-    managedStationId?: string | null;
-    assigned_station_id?: string | null;
-  }) => {
-    setCurrentUser({
-      id: userData.id,
-      name: userData.name,
-      role: userData.role,
-      email: userData.email,
-      managedStationId: userData.managedStationId,
-      assigned_station_id: userData.assigned_station_id,
-    });
+  // Effect to load user from localStorage on initial mount
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (storedUser) {
+        const parsedUser: User = JSON.parse(storedUser);
+        setCurrentUser(parsedUser);
+      }
+    } catch (error) {
+      console.error("Failed to load user from localStorage:", error);
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const login = (userData: User) => {
+    try {
+      setCurrentUser(userData);
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(userData));
+    } catch (error) {
+      console.error("Failed to save user to localStorage:", error);
+    }
   };
 
   const logout = () => {
-    setCurrentUser(null);
+    try {
+      setCurrentUser(null);
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+    } catch (error) {
+      console.error("Failed to remove user from localStorage:", error);
+    }
   };
 
   return (
@@ -69,11 +85,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       value={{
         currentUser,
         isAuthenticated: !!currentUser,
+        isLoading,
         login,
         logout,
       }}
     >
-      {children}
+      {!isLoading ? children : <div>Loading Authentication...</div>}
     </AuthContext.Provider>
   );
 };

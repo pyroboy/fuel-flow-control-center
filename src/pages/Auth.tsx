@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { UserRole } from "@/types";
+import { UserRole, User } from "@/types";
 import { Droplet, ChevronRight } from "lucide-react";
 import {
   Card,
@@ -47,33 +47,29 @@ const Auth: React.FC = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Create a mock user
-    const mockUserData = {
+    // Create mock user data matching the User interface
+    const mockUserData: User = {
       id: `mock_${Date.now()}`,
       name: `Mock ${getRoleDisplayName(selectedRole)}`,
       role: selectedRole,
-      email: `${selectedRole.replace("_", "")}@fuelflow.test`, // Generate mock email
+      email: `${selectedRole.replace("_", "")}@fuelflow.test`,
       managedStationId: null,
       assigned_station_id: null,
     };
 
-    // If logging in as GSO, assign a mock station they manage
+    // Adjustments based on selected role
     if (selectedRole === UserRole.GSO) {
       mockUserData.managedStationId = "gso_sta_1";
       mockUserData.name = "Mock Diana Prince";
       mockUserData.id = "usr_4";
       mockUserData.email = "diana.prince@gso.test";
     }
-
-    // If logging in as GSOStaff, assign them to a station
     if (selectedRole === UserRole.GSOStaff) {
       mockUserData.assigned_station_id = "gso_sta_1";
       mockUserData.name = "Mock Ethan Hunt";
       mockUserData.id = "usr_5";
       mockUserData.email = "ethan.hunt@staff.test";
     }
-
-    // Add specific emails for other roles
     if (selectedRole === UserRole.Admin) {
       mockUserData.email = "admin@fuelflow.test";
     }
@@ -83,17 +79,12 @@ const Auth: React.FC = () => {
     if (selectedRole === UserRole.DepotStaff) {
       mockUserData.email = "depot@fuelflow.test";
     }
-    +(
-      // Call the login function from AuthContext
-      login(mockUserData)
-    );
 
-    // Get the target path based on role
+    // Call the login function from AuthContext
+    login(mockUserData);
+
     const targetPath = getDashboardPathForRole(selectedRole);
-
     toast.success(`Logged in as ${getRoleDisplayName(selectedRole)}`);
-
-    // Navigate to the appropriate dashboard
     navigate(targetPath, { replace: true });
   };
 

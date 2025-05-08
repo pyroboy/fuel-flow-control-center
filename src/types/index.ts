@@ -1,68 +1,76 @@
-
 // Enums
 export enum UserRole {
-  Admin = 'admin',
-  OfficeStaff = 'office_staff',
-  DepotStaff = 'depot_staff',
-  GSO = 'gso',
-  GSOStaff = 'gso_staff'
+  Admin = "admin",
+  OfficeStaff = "office_staff",
+  DepotStaff = "depot_staff",
+  GSO = "gso",
+  GSOStaff = "gso_staff",
 }
 
 export enum RegistrationStatus {
-  Pending = 'pending',
-  Approved = 'approved',
-  Rejected = 'rejected'
+  Pending = "pending",
+  Approved = "approved",
+  Rejected = "rejected",
 }
 
 export enum TruckStatus {
-  Available = 'available',
-  Unavailable = 'unavailable',
-  Disabled = 'disabled',
-  OutForDelivery = 'out_for_delivery'
+  Available = "available",
+  Unavailable = "unavailable",
+  Disabled = "disabled",
+  OutForDelivery = "out_for_delivery",
 }
 
 export enum OrderType {
-  Delivery = 'delivery',
-  Pickup = 'pickup'
+  Delivery = "delivery",
+  Pickup = "pickup",
 }
 
 export enum OrderStatus {
-  Pending = 'pending',
-  Confirmed = 'confirmed',
-  Scheduled = 'scheduled',
-  OutForDelivery = 'out_for_delivery',
-  Delivered = 'delivered',
-  ReadyForPickup = 'ready_for_pickup',
-  PickedUp = 'picked_up',
-  Cancelled = 'cancelled'
+  Pending = "pending",
+  Confirmed = "confirmed",
+  Scheduled = "scheduled",
+  OutForDelivery = "out_for_delivery",
+  Delivered = "delivered",
+  ReadyForPickup = "ready_for_pickup",
+  PickedUp = "picked_up",
+  Cancelled = "cancelled",
 }
 
 export enum PaymentMethod {
-  Cash = 'cash',
-  Cheque = 'cheque'
+  Cash = "cash",
+  Cheque = "cheque",
 }
 
 export enum PaymentStatus {
-  Pending = 'pending',
-  Completed = 'completed'
+  Pending = "pending",
+  Completed = "completed",
 }
 
 export enum InventoryChangeType {
-  Replenishment = 'replenishment',
-  SaleDelivery = 'sale_delivery',
-  SalePickup = 'sale_pickup',
-  AdjustmentPositive = 'adjustment_positive',
-  AdjustmentNegative = 'adjustment_negative'
+  Replenishment = "replenishment",
+  SaleDelivery = "sale_delivery",
+  SalePickup = "sale_pickup",
+  AdjustmentPositive = "adjustment_positive",
+  AdjustmentNegative = "adjustment_negative",
 }
 
 export enum DeliveryRunStatus {
-  Scheduled = 'scheduled',
-  OutForDelivery = 'out_for_delivery',
-  Completed = 'completed',
-  Cancelled = 'cancelled'
+  Scheduled = "scheduled",
+  OutForDelivery = "out_for_delivery",
+  Completed = "completed",
+  Cancelled = "cancelled",
 }
 
 // Interfaces
+export interface User {
+  id: string | null;
+  name: string | null;
+  role: UserRole | null;
+  email: string | null;
+  managedStationId?: string | null;
+  assigned_station_id?: string | null;
+}
+
 export interface Profile {
   id: string;
   full_name: string | null;
@@ -105,7 +113,7 @@ export interface FuelPrice {
 export interface Truck {
   id: string;
   plate_number: string;
-  driver:string
+  driver: string;
   capacity_liters: number;
   status: TruckStatus;
   created_at: string;
