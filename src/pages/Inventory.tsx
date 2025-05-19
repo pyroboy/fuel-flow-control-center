@@ -49,14 +49,6 @@ const Inventory: React.FC = () => {
       capacity: 20000,
       lastUpdated: "2025-04-14T09:15:00Z",
     },
-    {
-      fuelTypeId: "ft_3",
-      fuelTypeName: "Kerosene",
-      currentLevel: 0,
-      unit: "Liters",
-      capacity: 10000,
-      lastUpdated: "2025-02-10T00:00:00Z",
-    }, // Example for unavailable fuel
   ];
 
   const [inventory, setInventory] =

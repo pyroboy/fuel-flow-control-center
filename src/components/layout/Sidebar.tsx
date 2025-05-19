@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { UserRole } from "@/types";
 import {
@@ -18,6 +18,7 @@ import {
   Building,
   Store,
   PlusCircle,
+  Fuel,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -35,6 +36,7 @@ interface NavItem {
 
 const Sidebar: React.FC<SidebarProps> = ({ userRole, collapsed, onToggle }) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems: NavItem[] = [
     {
@@ -140,7 +142,19 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, collapsed, onToggle }) => {
       )}
     >
       <div className="p-4 flex items-center justify-between">
-        {!collapsed && <h1 className="text-xl font-bold truncate">FuelFlow</h1>}
+        <Link
+          to="/"
+          className="flex items-center gap-2 cursor-pointer"
+          title="Go to Homepage"
+        >
+          <Fuel
+            size={collapsed ? 24 : 28}
+            className="text-white flex-shrink-0"
+          />
+          {!collapsed && (
+            <h1 className="text-xl font-bold truncate">FuelFlow</h1>
+          )}
+        </Link>
         <button
           onClick={onToggle}
           className={cn(

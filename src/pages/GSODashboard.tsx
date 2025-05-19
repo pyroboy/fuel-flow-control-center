@@ -27,6 +27,7 @@ import {
   TrendingUp,
   Users,
   Building,
+  Droplet,
 } from "lucide-react";
 import {
   Order,
@@ -37,9 +38,114 @@ import {
   OrderType,
   PaymentMethod,
   PaymentStatus,
+  FuelType as FuelTypeInterface,
+  FuelPrice,
 } from "@/types";
 import { useAuthContext } from "@/context/AuthContext";
 import { format } from "date-fns";
+
+// Mock fuel types data
+const mockFuelTypesData: FuelTypeInterface[] = [
+  {
+    id: "ft_1",
+    name: "Diesel",
+    is_available: true,
+    created_at: "2024-12-01T00:00:00Z",
+    updated_at: "2025-03-15T00:00:00Z",
+  },
+  {
+    id: "ft_2",
+    name: "Gasoline 95 RON",
+    is_available: true,
+    created_at: "2024-12-01T00:00:00Z",
+    updated_at: "2024-12-01T00:00:00Z",
+  },
+  {
+    id: "ft_4",
+    name: "Premium Gasoline 97 RON",
+    is_available: true,
+    created_at: "2025-02-01T00:00:00Z",
+    updated_at: "2025-02-01T00:00:00Z",
+  },
+];
+
+// Mock fuel prices data
+const mockFuelPricesData: FuelPrice[] = [
+  {
+    id: "fp_1",
+    fuel_type_id: "ft_1",
+    delivery_price_per_liter: 65.5,
+    pickup_price_per_liter: 64.0,
+    effective_from: "2025-03-01T00:00:00Z",
+    set_by_user_id: "usr_1",
+    created_at: "2025-02-28T10:00:00Z",
+  },
+  {
+    id: "fp_2",
+    fuel_type_id: "ft_1",
+    delivery_price_per_liter: 68.0,
+    pickup_price_per_liter: 66.5,
+    effective_from: "2025-04-10T00:00:00Z",
+    set_by_user_id: "usr_2",
+    created_at: "2025-04-09T15:30:00Z",
+  },
+  {
+    id: "fp_3",
+    fuel_type_id: "ft_2",
+    delivery_price_per_liter: 72.0,
+    pickup_price_per_liter: 70.5,
+    effective_from: "2025-03-05T00:00:00Z",
+    set_by_user_id: "usr_1",
+    created_at: "2025-03-04T11:00:00Z",
+  },
+  {
+    id: "fp_4",
+    fuel_type_id: "ft_2",
+    delivery_price_per_liter: 71.25,
+    pickup_price_per_liter: 69.75,
+    effective_from: "2025-04-01T00:00:00Z",
+    set_by_user_id: "usr_1",
+    created_at: "2025-03-31T09:00:00Z",
+  },
+  {
+    id: "fp_6",
+    fuel_type_id: "ft_4",
+    delivery_price_per_liter: 78.5,
+    pickup_price_per_liter: 77.0,
+    effective_from: "2025-04-05T00:00:00Z",
+    set_by_user_id: "usr_1",
+    created_at: "2025-04-04T14:00:00Z",
+  },
+  {
+    id: "fp_7",
+    fuel_type_id: "ft_1",
+    delivery_price_per_liter: 70.0,
+    pickup_price_per_liter: 68.5,
+    effective_from: "2025-05-01T00:00:00Z",
+    set_by_user_id: "usr_2",
+    created_at: "2025-04-14T17:00:00Z",
+  },
+];
+
+// Helper function to find current price
+const findCurrentPrice = (
+  fuelTypeId: string,
+  allPrices: FuelPrice[],
+  referenceDate: Date
+): FuelPrice | undefined => {
+  const now = referenceDate.getTime();
+  return allPrices
+    .filter(
+      (p) =>
+        p.fuel_type_id === fuelTypeId &&
+        new Date(p.effective_from).getTime() <= now
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.effective_from).getTime() -
+        new Date(a.effective_from).getTime()
+    )[0];
+};
 
 // Helper function to get status badge color
 const getStatusBadgeColor = (status: OrderStatus): string => {
@@ -284,15 +390,77 @@ const GSODashboard: React.FC = () => {
       .slice(0, 5);
   }, [mockOrders]);
 
+  // Calculate current fuel prices
+  const currentFuelPrices = useMemo(() => {
+    const referenceDate = new Date();
+    return mockFuelTypesData
+      .filter((ft) => ft.is_available)
+      .map((fuelType) => {
+        const price = findCurrentPrice(
+          fuelType.id,
+          mockFuelPricesData,
+          referenceDate
+        );
+        return price
+          ? {
+              fuelTypeId: fuelType.id,
+              fuelTypeName: fuelType.name,
+              deliveryPrice: price.delivery_price_per_liter,
+              pickupPrice: price.pickup_price_per_liter,
+            }
+          : null;
+      })
+      .filter(Boolean) as {
+      fuelTypeId: string;
+      fuelTypeName: string;
+      deliveryPrice: number;
+      pickupPrice: number;
+    }[];
+  }, []);
+
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-800">GSO Dashboard</h1>
-        <p className="text-gray-600 mt-1">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+          GSO Dashboard
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400 mt-1">
           Welcome, {currentUser?.name || "GSO Manager"}. Manage your gas
           stations and orders.
         </p>
       </div>
+
+      {/* Current Fuel Prices Card */}
+      {currentFuelPrices.length > 0 && (
+        <Card className="dark:bg-gray-800">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-lg font-semibold dark:text-gray-200">
+              Current Fuel Prices
+            </CardTitle>
+            <Droplet className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {currentFuelPrices.map((fuel) => (
+                <div
+                  key={fuel.fuelTypeId}
+                  className="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-md shadow-sm"
+                >
+                  <h4 className="font-medium text-gray-700 dark:text-gray-200">
+                    {fuel.fuelTypeName}
+                  </h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    Delivery: ₱{fuel.deliveryPrice.toFixed(2)}/L
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    Pickup: ₱{fuel.pickupPrice.toFixed(2)}/L
+                  </p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
