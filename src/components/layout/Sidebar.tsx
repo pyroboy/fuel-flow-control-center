@@ -147,12 +147,14 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole, collapsed, onToggle }) => {
           className="flex items-center gap-2 cursor-pointer"
           title="Go to Homepage"
         >
-          <Fuel
-            size={collapsed ? 24 : 28}
-            className="text-white flex-shrink-0"
+          <img
+            src="/logo/logo.svg"
+            alt="FuelFlow Logo"
+            className="h-8 w-auto"
           />
+
           {!collapsed && (
-            <h1 className="text-xl font-bold truncate">FuelFlow</h1>
+            <span className="text-xl font-bold text-white">FuelFlow</span>
           )}
         </Link>
         <button
